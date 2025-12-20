@@ -1,5 +1,4 @@
 import duckdb
-from src.config.settings import DUCKDB_PATH
 
 class DuckDBConnection:
     _instance = None
@@ -11,7 +10,7 @@ class DuckDBConnection:
         return cls._instance
 
     def _connect(self):
-        self.con = duckdb.connect(str(DUCKDB_PATH))
+        self.con = duckdb.connect("db/clima.duckdb")
 
     def execute(self, query: str, params=None):
         if params:
