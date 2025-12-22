@@ -152,3 +152,31 @@ def anomalias_extremos_por_fase_anual(indice, anio_inicio, anio_fin):
     """
 
     return con.execute(query, [anio_inicio, anio_fin]).df()
+
+def serie_extremo_con_enso(indice, anio_inicio, anio_fin):
+    con = DuckDBConnection()
+    query = f"""
+        WITH enso_anual AS (
+            SELECT
+                anio,
+                fase,
+                COUNT(*) AS meses
+            FROM dw.dim_enso
+            GROUP BY anio, fase
+            QUALIFY ROW_NUMBER() OVER (
+                PARTITION BY anio
+                ORDER BY meses DESC
+            ) = 1
+        )
+        SELECT
+            f.anio,
+            f.{indice} AS valor,
+            e.fase
+        FROM dw.fact_extremos_anual f
+        JOIN enso_anual e USING (anio)
+        WHERE f.anio BETWEEN ? AND ?
+          AND f.{indice} IS NOT NULL
+        ORDER BY f.anio
+    """
+    return con.execute(query, [anio_inicio, anio_fin]).df()
+

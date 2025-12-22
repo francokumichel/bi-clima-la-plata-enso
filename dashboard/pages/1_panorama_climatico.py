@@ -1,9 +1,10 @@
 import streamlit as st
 from data.panorama_queries import (
     extremos_anual,
-    extremos_estacional
+    extremos_estacional,
+    distribucion_indice
 )
-from components.charts import line_chart
+from components.charts import line_chart, boxplot_indice, histogram_indice
 
 # =========================
 # CONFIG
@@ -105,16 +106,47 @@ fig = line_chart(
 
 st.plotly_chart(fig, use_container_width=True)
 
-# =========================
-# GRÁFICO SECUNDARIO
-# =========================
+st.subheader("📦 Distribución del índice")
 
-st.subheader("📊 Valores anuales")
-
-st.bar_chart(
-    df.set_index("anio")["valor"]
+df_dist = distribucion_indice(
+    indice=indice,
+    anio_inicio=anio_inicio,
+    anio_fin=anio_fin,
+    estacion=estacion
 )
 
+if df_dist.empty:
+    st.warning("No hay datos para construir la distribución.")
+else:
+    col1, col2 = st.columns(2)
+
+    with col1:
+        fig_box = boxplot_indice(
+            df=df_dist,
+            indice=indice,
+            unidad=INDICES[indice]["unidad"],
+            estacion=estacion
+        )
+        st.plotly_chart(fig_box, use_container_width=True)
+
+    with col2:
+        bins = st.slider(
+            "Número de bins",
+            min_value=5,
+            max_value=50,
+            value=20,
+            step=1
+        )
+
+        fig_hist = histogram_indice(
+            df=df_dist,
+            indice=indice,
+            unidad=INDICES[indice]["unidad"],
+            estacion=estacion,
+            bins=bins
+        )
+        st.plotly_chart(fig_hist, use_container_width=True)
+        
 # =========================
 # TABLA (OPCIONAL)
 # =========================

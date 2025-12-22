@@ -1,10 +1,12 @@
 import streamlit as st
 import plotly.express as px
+from components.charts import timeseries_con_sombreado_enso
 from data.indices_vs_enso_queries import (
     extremos_vs_enso_anual,
     extremos_vs_enso_estacional,
     scatter_enso_vs_extremo,
-    anomalias_extremos_por_fase_anual
+    anomalias_extremos_por_fase_anual,
+    serie_extremo_con_enso
 )
 
 # =========================
@@ -164,6 +166,26 @@ else:
     )
 
     st.plotly_chart(fig_anom, use_container_width=True)
+
+st.subheader("📈 Serie temporal con fases ENSO")
+
+df_ts = serie_extremo_con_enso(
+    indice_extremo,
+    anio_inicio,
+    anio_fin
+)
+
+if df_ts.empty:
+    st.warning("No hay datos para mostrar la serie temporal.")
+else:
+    fig_ts = timeseries_con_sombreado_enso(
+        df_ts,
+        indice_extremo,
+        INDICES_EXTREMOS[indice_extremo]
+    )
+
+    st.plotly_chart(fig_ts, use_container_width=True)
+
 
 
 # =========================
