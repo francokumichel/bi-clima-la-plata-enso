@@ -41,18 +41,7 @@ def load_dim_enso(con):
             nino4,
             oni,
             soi,
+            fase,
 
-            CASE
-                WHEN oni >= 0.5 THEN 'Niño'
-                WHEN oni <= -0.5 THEN 'Niña'
-                ELSE 'Neutro'
-            END AS fase,
-
-            CASE
-                WHEN ABS(oni) >= 2.0 THEN 'Fuerte'
-                WHEN ABS(oni) >= 1.0 THEN 'Moderado'
-                WHEN ABS(oni) >= 0.5 THEN 'Débil'
-                ELSE 'Neutro'
-            END AS intensidad
         FROM read_csv_auto('data/curated/enso.csv');
     """)

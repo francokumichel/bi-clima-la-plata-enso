@@ -39,8 +39,6 @@ def create_model(con: DuckDBConnection):
             soi DOUBLE,
 
             fase VARCHAR NOT NULL,        -- Niño, Niña, Neutro
-            intensidad VARCHAR NOT NULL,  -- Débil, Moderado, Fuerte
-
             UNIQUE (anio, mes)
         );
 

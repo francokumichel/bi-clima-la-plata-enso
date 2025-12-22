@@ -59,16 +59,16 @@ with col3:
     if tipo == "Estacional":
         estacion = st.selectbox(
             "Estación",
-            ["DJF", "MAM", "JJA", "SON"]
+            ["Verano", "Otoño", "Invierno", "Primavera"]
         )
     else:
         estacion = None
 
 anio_inicio, anio_fin = st.slider(
     "Período de análisis",
-    min_value=1950,
-    max_value=2025,
-    value=(1980, 2020),
+    min_value=1961,
+    max_value=2024,
+    value=(1961, 2024),
     step=1
 )
 
