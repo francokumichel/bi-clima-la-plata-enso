@@ -5,8 +5,6 @@ import plotly.graph_objects as go
 from dashboard.data.enso_queries import (
     get_enso_por_estacion_20_anios,
     get_indice_por_fase_y_periodo,
-    get_intensidad_ultimos_20_anios,
-    get_enso_por_anio_fase_intensidad,
     get_fases_por_anio,
     get_distribucion_fases_by_lapse,
     get_oni_temporal
