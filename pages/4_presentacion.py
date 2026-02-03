@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_mermaid import st_mermaid
 
 # =========================
 # CONFIG
@@ -186,6 +187,43 @@ with col_texto:
         - Consultas SQL embebidas en Python
         """
     )
+
+    with col_img:
+        with st.expander("Ver esquema dimensional", expanded=True):
+            # Definimos el string del diagrama (sin las comillas de código ```)
+            mermaid_code = """
+            erDiagram
+                DIM_FECHA ||--o{ FACT_CLIMA : "fecha_id"
+                DIM_FECHA ||--o{ FACT_EXTREMOS_ANUAL : "anio"
+                DIM_FECHA ||--o{ FACT_EXTREMOS_ESTACIONAL : "anio, estacion"
+                DIM_ENSO ||--o{ FACT_CLIMA : "anio, mes"
+                
+                DIM_FECHA {
+                    int fecha_id PK
+                    date fecha
+                    int anio
+                    int mes
+                    int dia
+                }
+                DIM_ENSO {
+                    int enso_id PK
+                    string fase
+                }
+                FACT_CLIMA {
+                    int fecha_id FK
+                    float pp
+                }
+                FACT_EXTREMOS_ANUAL {
+                    int anio FK
+                    float PRCPTOT
+                }
+                FACT_EXTREMOS_ESTACIONAL {
+                    int anio FK
+                    string estacion FK
+                    float PRCPTOT
+                }
+            """
+            st_mermaid(mermaid_code, height=500)
     
 st.markdown("---")
 
