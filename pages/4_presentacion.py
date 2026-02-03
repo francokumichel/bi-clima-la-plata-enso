@@ -186,13 +186,7 @@ with col_texto:
         - Consultas SQL embebidas en Python
         """
     )
-with col_img:
-    with st.expander("Ver esquema dimensional"):
-        st.image(
-            "dashboard/modelo_dimensional.png",
-            use_container_width=True
-        )
-
+    
 st.markdown("---")
 
 # =========================
