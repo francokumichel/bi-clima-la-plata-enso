@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
-from dashboard.data.enso_queries import (
+from queries.enso_queries import (
     get_enso_por_estacion_20_anios,
     get_indice_por_fase_y_periodo,
     get_fases_por_anio,

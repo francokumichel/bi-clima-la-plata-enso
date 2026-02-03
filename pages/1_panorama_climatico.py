@@ -1,5 +1,5 @@
 import streamlit as st
-from data.panorama_queries import (
+from queries.panorama_queries import (
     extremos_anual,
     extremos_estacional,
     distribucion_indice

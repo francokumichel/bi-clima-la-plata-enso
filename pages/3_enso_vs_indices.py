@@ -1,7 +1,7 @@
 import streamlit as st
 import plotly.express as px
 from components.charts import timeseries_con_sombreado_enso
-from data.indices_vs_enso_queries import (
+from queries.indices_vs_enso_queries import (
     extremos_vs_enso_anual,
     extremos_vs_enso_estacional,
     scatter_enso_vs_extremo,
